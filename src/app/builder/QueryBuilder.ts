@@ -1,4 +1,5 @@
 import { FilterQuery, Query } from 'mongoose';
+import { ListingsModel } from '../Modules/Listings/Listings.model';
 
 class QueryBuilder<T> {
     public modelQuery: Query<T[], T>;
@@ -9,21 +10,39 @@ class QueryBuilder<T> {
         this.query = query;
     }
 
-    search(searchableFields: string[]) {
-        const searchTerm = this?.query?.searchTerm;
-        if (searchTerm) {
-            this.modelQuery = this.modelQuery.find({
-                $or: searchableFields.map(
-                    (field) =>
-                        ({
-                            [field]: { $regex: searchTerm, $options: 'i' },
-                        }) as FilterQuery<T>,
-                ),
-            });
-        }
+    // search(searchableFields: string[]) {
+    //     const searchTerm = this?.query?.searchTerm;
+    //     if (searchTerm) {
+    //         this.modelQuery = this.modelQuery.find({
+    //             $or: searchableFields.map(
+    //                 (field) =>
+    //                     ({
+    //                         [field]: { $regex: searchTerm, $options: 'i' },
+    //                     }) as FilterQuery<T>,
+    //             ),
+    //         });
+    //     }
 
+    //     return this;
+    // }
+    search(searchableFields: string[]) {
+        const searchTerm = this?.query?.searchTerm as string;
+        
+        if (searchTerm) {
+            const regex = new RegExp(searchTerm, 'i');
+    
+            this.modelQuery = this.modelQuery.find({
+                $or: searchableFields
+                    .filter((field) => ListingsModel.schema.path(field)?.instance === 'String') // Ensure field is a String
+                    .map((field) => ({
+                        [field]: { $regex: regex },
+                    })),
+            } as FilterQuery<T>);
+        }
+    
         return this;
     }
+    
 
     filter() {
         const queryObj = { ...this.query }; // copy

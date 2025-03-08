@@ -35,6 +35,7 @@ const updateListingIntoDB = async (id: string, payload: Partial<TListing>) => {
 // };
 
 const getAllListingsFromDB = async (query: Record<string, unknown>) => {
+  
   const { minPrice, maxPrice, ...pQuery } = query;
 
    const listingQuery = new QueryBuilder(

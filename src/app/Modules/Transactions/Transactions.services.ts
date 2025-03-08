@@ -5,6 +5,7 @@ import { TransactionsModel } from './Transactions.model';
 
 
 const createTransactionIntoDB = async (payload: TTransaction) => {
+  console.log(payload);
   const result = await TransactionsModel.create(payload);
   return result;
 };
