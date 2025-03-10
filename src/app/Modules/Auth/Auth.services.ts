@@ -149,11 +149,16 @@ const getAllFeedBackUserIntoDB = async () => {
 const dashboardStatisticsFromDB = async (id: string) => {
   const productData = await ListingsModel.find();
   const transactionData = await TransactionsModel.find();
-  const productCount = productData.length;
-
+  
+  let productCount = 0;
   let buyCount = 0;
   let saleCount = 0;
 
+  productData.forEach((product) => {
+    if (product.userId?.toString() === id) {
+      productCount++;
+    }
+  });
   transactionData.forEach((transaction) => {
     if (transaction.buyerId?.toString() === id) {
       buyCount++;
