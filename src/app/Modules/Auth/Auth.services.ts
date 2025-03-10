@@ -15,7 +15,7 @@ const registerUserIntoDB = async (userData: TAuth) => {
     throw new AppError(406, 'Email is already registered');
   }
 
-  // Create the user
+ 
   const user = new AuthModel(userData);
   const createdUser = await user.save();
 
