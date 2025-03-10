@@ -3,7 +3,6 @@ import validateRequest from '../../middlewares/validateRequest';
 import { authValidationSchema } from './Auth.validation';
 import { AuthControllers } from './Auth.controllers';
 
-
 const router = express.Router();
 
 router.post(
@@ -18,7 +17,7 @@ router.post(
 );
 router.patch(
   '/update-auth/:id',
-  
+
   validateRequest(authValidationSchema.updateAuthInfoValidationSchema),
   AuthControllers.updateAuth,
 );
@@ -39,21 +38,16 @@ router.delete(
   AuthControllers.deleteSingleAuth,
 );
 
-
-
 router.post('/refresh-token', AuthControllers.refreshToken);
-
 
 router.post('/feedback-user', AuthControllers.feedBackUser);
 
 router.get('/feedback', AuthControllers.getAllFeedBackUser);
-
 
 router.get(
   '/dashboard-auth/:id',
 
   AuthControllers.dashboardStatistics,
 );
-
 
 export const AuthRoutes = router;

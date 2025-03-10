@@ -22,11 +22,8 @@ const updateAuthInfoValidationSchema = z.object({
   }),
 });
 
-
-
 export const authValidationSchema = {
   authRegisterValidationSchema,
   updateAuthInfoValidationSchema,
-  authLoginValidationSchema
-
+  authLoginValidationSchema,
 };

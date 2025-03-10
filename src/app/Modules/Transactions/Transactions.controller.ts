@@ -2,8 +2,6 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { TransactionsServices } from './Transactions.services';
 
-
-
 const createTransaction = catchAsync(async (req, res) => {
   const result = await TransactionsServices.createTransactionIntoDB(req.body);
 
@@ -27,9 +25,10 @@ const updateTransaction = catchAsync(async (req, res) => {
   });
 });
 
-
 const getAllPurchases = catchAsync(async (req, res) => {
-  const result = await TransactionsServices.getAllPurchasesFromDB(req.params.id);
+  const result = await TransactionsServices.getAllPurchasesFromDB(
+    req.params.id,
+  );
 
   sendResponse(res, {
     statusCode: 200,
@@ -51,7 +50,9 @@ const getAllSales = catchAsync(async (req, res) => {
 });
 
 const deleteSingleTransactions = catchAsync(async (req, res) => {
-  const result = await TransactionsServices.deleteSingleTransactionFromDB(req.params.id);
+  const result = await TransactionsServices.deleteSingleTransactionFromDB(
+    req.params.id,
+  );
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -60,13 +61,10 @@ const deleteSingleTransactions = catchAsync(async (req, res) => {
   });
 });
 
-
-
 export const TransactionsControllers = {
   createTransaction,
   updateTransaction,
   getAllPurchases,
   getAllSales,
   deleteSingleTransactions,
-
 };

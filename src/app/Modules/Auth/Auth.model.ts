@@ -3,21 +3,18 @@ import { TAuth, AuthStaticModel, TFeedBack } from './Auth.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 
-
 const feedBackSchema = new Schema<TFeedBack>({
   feedbackUserPhoto: { type: String, required: true },
   name: { type: String, required: true },
-  lifeStyle: {type: String, require: true},
+  lifeStyle: { type: String, require: true },
   feedBack: {
     type: String,
     required: true,
-  }
+  },
 });
-
 
 const authSchema = new Schema<TAuth, AuthStaticModel>(
   {
-
     authName: {
       type: String,
       default: '',
@@ -33,8 +30,7 @@ const authSchema = new Schema<TAuth, AuthStaticModel>(
     },
     password: {
       type: String,
-      required:true,
-      
+      required: true,
     },
     role: {
       type: String,
@@ -52,15 +48,14 @@ const authSchema = new Schema<TAuth, AuthStaticModel>(
     },
   },
   {
-    
     timestamps: true,
     toJSON: {
       transform: (doc, ret) => {
-        delete ret.password;  // Remove password field
+        delete ret.password; // Remove password field
         return ret;
       },
+    },
   },
-}
 );
 
 authSchema.statics.isAuthExistById = async function (id: string) {
@@ -69,7 +64,6 @@ authSchema.statics.isAuthExistById = async function (id: string) {
 authSchema.statics.isAuthExistByEmail = async function (email: string) {
   return await AuthModel.findOne({ email });
 };
-
 
 authSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -91,4 +85,3 @@ authSchema.statics.isPasswordMatched = async function (
 export const AuthModel = model<TAuth, AuthStaticModel>('Auth', authSchema);
 
 export const FeedBackModel = model<TFeedBack>('FeedBack', feedBackSchema);
-

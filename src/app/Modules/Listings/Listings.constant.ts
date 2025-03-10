@@ -1,4 +1,3 @@
-
 export const conditions = [
   'Brand New',
   'Like New',
@@ -8,4 +7,10 @@ export const conditions = [
   'Needs Repair / For Parts',
 ] as const;
 
-export const listingsSearchableField = ['title', 'description', 'condition', 'category', 'userId'];
+export const listingsSearchableField = [
+  'title',
+  'description',
+  'condition',
+  'category',
+  'userId',
+];

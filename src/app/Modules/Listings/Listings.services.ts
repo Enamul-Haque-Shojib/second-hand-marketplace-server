@@ -3,8 +3,7 @@ import AppError from '../../errors/AppError';
 import { listingsSearchableField } from './Listings.constant';
 
 import { TListing } from './Listings.interface';
-import { ListingsModel} from './Listings.model';
-
+import { ListingsModel } from './Listings.model';
 
 const createListingIntoDB = async (payload: TListing) => {
   const result = await ListingsModel.create(payload);
@@ -23,8 +22,6 @@ const updateListingIntoDB = async (id: string, payload: Partial<TListing>) => {
   return updateListingInfo;
 };
 
-
-
 // const getAllTasksFromDB = async (query: Record<string, unknown>) => {
 //   const taskQuery = new QueryBuilder(TaskModel.find().populate('auth'), query)
 //   .search(taskSearchableField)
@@ -35,39 +32,37 @@ const updateListingIntoDB = async (id: string, payload: Partial<TListing>) => {
 // };
 
 const getAllListingsFromDB = async (query: Record<string, unknown>) => {
-  
   const { minPrice, maxPrice, ...pQuery } = query;
 
-   const listingQuery = new QueryBuilder(
-      ListingsModel.find()
-         .populate('userId'),
-      pQuery
-   )
-      .search(listingsSearchableField)
-      .filter()
-      .sort()
-      .paginate()
-      .fields()
-      .priceRange(Number(minPrice) || 0, Number(maxPrice) || Infinity);
+  const listingQuery = new QueryBuilder(
+    ListingsModel.find().populate('userId'),
+    pQuery,
+  )
+    .search(listingsSearchableField)
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
+    .priceRange(Number(minPrice) || 0, Number(maxPrice) || Infinity);
 
-   const listings = await listingQuery.modelQuery.lean();
-   return listings;
+  const listings = await listingQuery.modelQuery.lean();
+  return listings;
 };
 
-
+const getUserListingsFromDB = async (userId: string) => {
+  const userListingInfo = await ListingsModel.find({userId}).populate('userId');
+  return userListingInfo;
+};
 
 const getSingleListingFromDB = async (id: string) => {
-
-  const ListingInfo = await ListingsModel.findById(id).populate('userId')
+  const ListingInfo = await ListingsModel.findById(id).populate('userId');
   return ListingInfo;
 };
-
 
 const deleteSingleListingFromDB = async (id: string) => {
   const deleteListingInfo = await ListingsModel.findByIdAndDelete(id);
   return deleteListingInfo;
 };
-
 
 export const ListingServices = {
   createListingIntoDB,
@@ -75,5 +70,5 @@ export const ListingServices = {
   getAllListingsFromDB,
   deleteSingleListingFromDB,
   getSingleListingFromDB,
- 
+  getUserListingsFromDB
 };

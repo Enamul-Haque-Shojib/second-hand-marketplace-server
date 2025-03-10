@@ -1,10 +1,6 @@
-
-
-
 export const transactionSearchableField = [
-    'buyerId',
-    'sellerId',
-    'itemId',
-    'status'
-    
-  ];
+  'buyerId',
+  'sellerId',
+  'itemId',
+  'status',
+];

@@ -3,11 +3,8 @@ import { model, Schema } from 'mongoose';
 import { ListingStaticModel, TListing } from './Listings.interface';
 import { conditions } from './Listings.constant';
 
-
-
 const listingsSchema = new Schema<TListing, ListingStaticModel>(
   {
-  
     title: {
       type: String,
       required: true,
@@ -17,7 +14,7 @@ const listingsSchema = new Schema<TListing, ListingStaticModel>(
       type: String,
       required: true,
     },
-    price:{
+    price: {
       type: Number,
       required: true,
     },
@@ -26,28 +23,26 @@ const listingsSchema = new Schema<TListing, ListingStaticModel>(
       enum: conditions,
     },
     image: {
-      type: String
+      type: String,
     },
 
-   userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Auth',
-   },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Auth',
+    },
     category: {
       type: String,
     },
     status: {
       type: String,
       enum: ['Available', 'Sold'],
-      default: "Available"
+      default: 'Available',
     },
   },
   {
     timestamps: true,
   },
 );
-
-
 
 export const ListingsModel = model<TListing, ListingStaticModel>(
   'Listings',

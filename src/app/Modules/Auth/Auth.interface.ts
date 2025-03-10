@@ -4,16 +4,15 @@ import { AuthRole } from './Auth.constant';
 
 export enum UserRole {
   ADMIN = 'admin',
-  USER = 'user'
+  USER = 'user',
 }
 
 export type TFeedBack = {
   feedbackUserPhoto: string;
-  name:string;
+  name: string;
   lifeStyle: string;
   feedBack: string;
-}
-
+};
 
 export type TAuth = {
   authName?: string;
@@ -21,7 +20,7 @@ export type TAuth = {
   email: string;
   password: string;
   role?: 'admin' | 'user';
-  status?: 'Ban'|'Unban'
+  status?: 'Ban' | 'Unban';
 };
 
 export interface AuthStaticModel extends Model<TAuth> {

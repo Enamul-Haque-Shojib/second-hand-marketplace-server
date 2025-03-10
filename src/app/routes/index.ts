@@ -11,7 +11,7 @@ const moduleRoutes = [
     path: '/auth',
     route: AuthRoutes,
   },
-  
+
   {
     path: '/listings',
     route: ListingRoutes,
@@ -20,7 +20,6 @@ const moduleRoutes = [
     path: '/transactions',
     route: TransactionRoutes,
   },
-  
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

@@ -4,59 +4,53 @@ import sendResponse from '../../utils/sendResponse';
 import { AuthServices } from './Auth.services';
 
 const registerUser = catchAsync(async (req, res) => {
-  
-  const result = await AuthServices.registerUserIntoDB(
-    req.body
- );
+  const result = await AuthServices.registerUserIntoDB(req.body);
 
- const { refreshToken, accessToken, user } = result;
+  const { refreshToken, accessToken, user } = result;
 
- res.cookie('secondHandMarketplace_refreshToken', refreshToken, {
+  res.cookie('secondHandMarketplace_refreshToken', refreshToken, {
     secure: config.NODE_ENV === 'production',
     httpOnly: true,
     sameSite: 'none',
     maxAge: 1000 * 60 * 60 * 24 * 365,
- });
+  });
 
- sendResponse(res, {
+  sendResponse(res, {
     statusCode: 200,
     success: true,
     message: 'User registration completed successfully!',
     data: {
       user,
-       accessToken,
-       refreshToken
+      accessToken,
+      refreshToken,
     },
- });
+  });
 });
 
 const loginUser = catchAsync(async (req, res) => {
-  
   const result = await AuthServices.loginUserIntoDB(req.body);
   const { refreshToken, accessToken, user } = result;
 
   res.cookie('secondHandMarketplace_refreshToken', refreshToken, {
-     secure: config.NODE_ENV === 'production',
-     httpOnly: true,
-     sameSite: 'none',
-     maxAge: 1000 * 60 * 60 * 24 * 365,
+    secure: config.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: 'none',
+    maxAge: 1000 * 60 * 60 * 24 * 365,
   });
 
-
   sendResponse(res, {
-     statusCode: 200,
-     success: true,
-     message: 'User logged in successfully!',
-     data: {
-        user,
-        accessToken,
-        refreshToken
-     },
+    statusCode: 200,
+    success: true,
+    message: 'User logged in successfully!',
+    data: {
+      user,
+      accessToken,
+      refreshToken,
+    },
   });
 });
 
 const updateAuth = catchAsync(async (req, res) => {
- 
   const result = await AuthServices.updateAuthIntoDB(req.params.id, req.body);
 
   sendResponse(res, {
@@ -68,9 +62,8 @@ const updateAuth = catchAsync(async (req, res) => {
 });
 
 const getSingleAuth = catchAsync(async (req, res) => {
-  
   const result = await AuthServices.getSingleAuthFromDB(req.params.email);
-  
+
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -88,7 +81,6 @@ const getAllAuths = catchAsync(async (req, res) => {
   });
 });
 
-
 const deleteSingleAuth = catchAsync(async (req, res) => {
   const result = await AuthServices.deleteAuthFromDB(req.params.id);
   sendResponse(res, {
@@ -99,45 +91,39 @@ const deleteSingleAuth = catchAsync(async (req, res) => {
   });
 });
 
-
-
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies;
 
   const result = await AuthServices.createJwtToken(refreshToken);
 
   sendResponse(res, {
-     statusCode: 200,
-     success: true,
-     message: 'User logged in successfully!',
-     data: result,
+    statusCode: 200,
+    success: true,
+    message: 'User logged in successfully!',
+    data: result,
   });
 });
 
-const feedBackUser = catchAsync(async(req, res) => {
-
+const feedBackUser = catchAsync(async (req, res) => {
   const result = await AuthServices.feedBackUserIntoDB(req.body);
 
   sendResponse(res, {
-      statusCode: 200,
-      success: true,
-      message: "User feedback created successfully",
-      data: result
-  })
+    statusCode: 200,
+    success: true,
+    message: 'User feedback created successfully',
+    data: result,
+  });
 });
-const getAllFeedBackUser = catchAsync(async(req, res) => {
-  
-
+const getAllFeedBackUser = catchAsync(async (req, res) => {
   const result = await AuthServices.getAllFeedBackUserIntoDB();
 
   sendResponse(res, {
-      statusCode: 200,
-      success: true,
-      message: "User feedback retrieve successfully",
-      data: result
-  })
+    statusCode: 200,
+    success: true,
+    message: 'User feedback retrieve successfully',
+    data: result,
+  });
 });
-
 
 const dashboardStatistics = catchAsync(async (req, res) => {
   const result = await AuthServices.dashboardStatisticsFromDB(req.params.id);
@@ -150,7 +136,6 @@ const dashboardStatistics = catchAsync(async (req, res) => {
   });
 });
 
-
 export const AuthControllers = {
   registerUser,
   loginUser,
@@ -161,6 +146,5 @@ export const AuthControllers = {
   refreshToken,
   feedBackUser,
   getAllFeedBackUser,
-  dashboardStatistics
-
+  dashboardStatistics,
 };

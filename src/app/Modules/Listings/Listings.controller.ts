@@ -2,9 +2,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { ListingServices } from './Listings.services';
 
-
 const createListing = catchAsync(async (req, res) => {
-  
   const result = await ListingServices.createListingIntoDB(req.body);
 
   sendResponse(res, {
@@ -47,6 +45,16 @@ const getAllListings = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getUserListings = catchAsync(async (req, res) => {
+  const result = await ListingServices.getUserListingsFromDB(req.params.id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Listing successfully retrieved',
+    data: result,
+  });
+});
 
 const deleteSingleListing = catchAsync(async (req, res) => {
   const result = await ListingServices.deleteSingleListingFromDB(req.params.id);
@@ -58,15 +66,11 @@ const deleteSingleListing = catchAsync(async (req, res) => {
   });
 });
 
-
-
-
-
 export const ListingControllers = {
   createListing,
   updateListing,
   getAllListings,
   deleteSingleListing,
   getSingleListing,
-  
+  getUserListings
 };

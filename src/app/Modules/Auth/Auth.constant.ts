@@ -3,8 +3,4 @@ export const AuthRole = {
   User: 'user',
 } as const;
 
-export const authSearchableField = [
-  'name',
-  'email',
-  'role',
-];
+export const authSearchableField = ['name', 'email', 'role'];
