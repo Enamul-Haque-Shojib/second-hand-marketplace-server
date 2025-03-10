@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 export type TTransaction = {
   buyerId: Types.ObjectId;
@@ -7,6 +7,6 @@ export type TTransaction = {
   status: 'Pending' | 'Completed';
 };
 
-// export interface ListingStaticModel extends Model<TListing> {
-//   isProductExistById(id: string): Promise<TListing>;
-// }
+export interface TransactionStaticModel extends Model<TTransaction> {
+  isProductExistById(id: string): Promise<boolean>;
+}

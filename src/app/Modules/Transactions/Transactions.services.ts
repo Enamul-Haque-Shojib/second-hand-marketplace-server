@@ -4,6 +4,11 @@ import { TTransaction } from './Transactions.interface';
 import { TransactionsModel } from './Transactions.model';
 
 const createTransactionIntoDB = async (payload: TTransaction) => {
+
+  const isTransactionProductExist = await TransactionsModel.isProductExistById(payload.itemId.toString());
+  if(isTransactionProductExist){
+    throw new AppError(400, 'Product already purchased');
+  }
   const result = await TransactionsModel.create(payload);
   return result;
 };

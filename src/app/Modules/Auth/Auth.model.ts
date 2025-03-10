@@ -51,7 +51,7 @@ const authSchema = new Schema<TAuth, AuthStaticModel>(
     timestamps: true,
     toJSON: {
       transform: (doc, ret) => {
-        delete ret.password; // Remove password field
+        delete ret.password; 
         return ret;
       },
     },

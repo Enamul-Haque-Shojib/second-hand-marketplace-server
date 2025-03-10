@@ -44,6 +44,9 @@ const listingsSchema = new Schema<TListing, ListingStaticModel>(
   },
 );
 
+
+
+
 export const ListingsModel = model<TListing, ListingStaticModel>(
   'Listings',
   listingsSchema,

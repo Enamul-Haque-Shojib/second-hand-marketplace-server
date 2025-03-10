@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { TTransaction } from './Transactions.interface';
+import { TransactionStaticModel, TTransaction } from './Transactions.interface';
 
-const transactionsSchema = new Schema<TTransaction>(
+const transactionsSchema = new Schema<TTransaction, TransactionStaticModel>(
   {
     buyerId: {
       type: Schema.Types.ObjectId,
@@ -26,7 +26,11 @@ const transactionsSchema = new Schema<TTransaction>(
   },
 );
 
-export const TransactionsModel = model<TTransaction>(
+transactionsSchema.statics.isProductExistById = async function (id: string) {
+  return await TransactionsModel.findOne({itemId: id});
+};
+
+export const TransactionsModel = model<TTransaction, TransactionStaticModel>(
   'Transactions',
   transactionsSchema,
 );
