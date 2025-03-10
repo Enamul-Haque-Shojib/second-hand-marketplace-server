@@ -48,4 +48,12 @@ router.post('/feedback-user', AuthControllers.feedBackUser);
 
 router.get('/feedback', AuthControllers.getAllFeedBackUser);
 
+
+router.get(
+  '/dashboard-auth/:id',
+
+  AuthControllers.dashboardStatistics,
+);
+
+
 export const AuthRoutes = router;

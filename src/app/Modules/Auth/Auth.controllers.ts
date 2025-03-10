@@ -138,6 +138,19 @@ const getAllFeedBackUser = catchAsync(async(req, res) => {
   })
 });
 
+
+const dashboardStatistics = catchAsync(async (req, res) => {
+  const result = await AuthServices.dashboardStatisticsFromDB(req.params.id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'successfully calculated for dashboard statistics',
+    data: result,
+  });
+});
+
+
 export const AuthControllers = {
   registerUser,
   loginUser,
@@ -147,6 +160,7 @@ export const AuthControllers = {
   deleteSingleAuth,
   refreshToken,
   feedBackUser,
-  getAllFeedBackUser
+  getAllFeedBackUser,
+  dashboardStatistics
 
 };

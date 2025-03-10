@@ -10,6 +10,8 @@ import QueryBuilder from '../../builder/QueryBuilder';
 
 
 import config from '../../config';
+import { ListingsModel } from '../Listings/Listings.model';
+import { TransactionsModel } from '../Transactions/Transactions.model';
 
 const registerUserIntoDB = async (userData: TAuth) => {
   
@@ -171,6 +173,30 @@ const feedBackUserIntoDB = async (userData: TFeedBack) => {
  
  };
 
+
+ const dashboardStatisticsFromDB = async (id: string) => {
+  
+
+   const productData = await ListingsModel.find();
+   const transactionData = await TransactionsModel.find();
+   const productCount = productData.length; 
+
+   let buyCount = 0;
+   let saleCount = 0;
+
+   transactionData.forEach((transaction) => {
+    if(transaction.buyerId?.toString() === id){
+      buyCount++;
+    }else if(transaction.sellerId?.toString() === id){
+      saleCount++
+    }
+   })
+ 
+
+   return {productCount, buyCount, saleCount};
+
+};
+
 export const AuthServices = {
    registerUserIntoDB,
    loginUserIntoDB,
@@ -180,6 +206,7 @@ export const AuthServices = {
   getSingleAuthFromDB,
   createJwtToken,
   feedBackUserIntoDB,
-  getAllFeedBackUserIntoDB
+  getAllFeedBackUserIntoDB,
+  dashboardStatisticsFromDB
 
 };
